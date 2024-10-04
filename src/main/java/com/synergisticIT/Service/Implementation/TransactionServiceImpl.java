@@ -1,12 +1,17 @@
 package com.synergisticIT.Service.Implementation;
 
+import com.synergisticIT.Domain.Author;
 import com.synergisticIT.Domain.Transaction;
 import com.synergisticIT.Repositories.TransactionRepository;
 import com.synergisticIT.Service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class TransactionServiceImpl implements TransactionService {
     @Autowired
     TransactionRepository transactionRepository;
@@ -48,4 +53,10 @@ public class TransactionServiceImpl implements TransactionService {
     public List<Transaction> getAllTransactionsForMember(Integer memberId) {
         return null;
     }
+
+    @Override
+    public Page<Transaction> findAllPaginiated(int page, int size) {
+        return transactionRepository.findAll(PageRequest.of(page, size));
+    }
+
 }

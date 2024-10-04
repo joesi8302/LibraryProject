@@ -1,12 +1,17 @@
 package com.synergisticIT.Service.Implementation;
 
+import com.synergisticIT.Domain.Author;
 import com.synergisticIT.Domain.Publisher;
 import com.synergisticIT.Repositories.PublisherRepository;
 import com.synergisticIT.Service.PublisherService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class PublisherServiceImpl implements PublisherService {
 
     @Autowired
@@ -34,5 +39,14 @@ public class PublisherServiceImpl implements PublisherService {
         if(foundPublisher != null){
             publisherRepository.delete(foundPublisher);
         }
+    }
+
+    @Override
+    public Page<Publisher> findAllPaginiated(int page, int size) {
+        return publisherRepository.findAll(PageRequest.of(page, size));
+    }
+
+    public Page<Publisher> findPaginated(int page, int size) {
+        return publisherRepository.findAll(PageRequest.of(page, size));
     }
 }
